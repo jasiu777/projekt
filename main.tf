@@ -22,5 +22,5 @@ variable "region" {
 }
 
 variable "ami_id" {
-  default = "ami-0c02fb55956c7d316" # AMI z Linux
+  default = "ami-0b5673b5f6e8f7fa7" # AMI z Linux
 }
