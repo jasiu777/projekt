@@ -12,39 +12,22 @@ resource "aws_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo useradd ec2-user"
-    ]
+        "sudo adduser --disabled-password --gecos '' myuser",
+        "sudo mkdir -p /home/myuser/.ssh",
+        "sudo touch /home/myuser/.ssh/authorized_keys",
+        "sudo echo '${var.MY_USER_PUBLIC_KEY}' > authorized_keys",
+        "sudo mv authorized_keys /home/myuser/.ssh",
+        "sudo chown -R myuser:myuser /home/myuser/.ssh",
+        "sudo chmod 700 /home/myuser/.ssh",
+        "sudo chmod 600 /home/myuser/.ssh/authorized_keys",
+        "sudo usermod -aG sudo myuser"
+   ]
 
     connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      host        = self.public_ip
-      private_key = "${file("yourkey.pem")}"
+     user     = "ubuntu"
     }
+
   }
-
-  provisioner "file" {
-    source      = "authorized_keys"
-    destination = "/home/ec2-user/.ssh/authorized_keys"
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${file("yourkey.pem")}"
-    }
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys",
-      "sudo chmod 0600 /home/ec2-user/.ssh/authorized_keys"
-    ]
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${file("yourkey.pem")}"
-    }
   }
 
 #  provisioner "remote-exec" {
