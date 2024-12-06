@@ -10,6 +10,30 @@ resource "aws_instance" "app" {
     Name = "PythonAppInstance"
   }
 
+  provisioner "file" {
+    source      = "authorized_keys"
+    destination = "/home/someuser/.ssh/authorized_keys"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = "${file("yourkey.pem")}"
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chown someuser:someuser /home/someuser/.ssh/authorized_keys",
+      "sudo chmod 0600 /home/someuser/.ssh/authorized_keys"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = "${file("yourkey.pem")}"
+    }
+  }
+
 #  provisioner "remote-exec" {
 #    inline = [
 #      "docker run -d -p 80:80 python-app"
