@@ -16,7 +16,7 @@ resource "aws_instance" "app" {
 #      "docker run -d -p 80:80 python-app"
 #    ]
 #  }
-}
+#}
 
 variable "region" {
   default = "eu-central-1"
