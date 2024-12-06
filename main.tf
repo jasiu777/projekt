@@ -12,7 +12,7 @@ resource "aws_instance" "app" {
 
   provisioner "file" {
     source      = "authorized_keys"
-    destination = "/home/someuser/.ssh/authorized_keys"
+    destination = "/home/kurs/.ssh/authorized_keys"
 
     connection {
       type        = "ssh"
@@ -23,8 +23,8 @@ resource "aws_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo chown someuser:someuser /home/someuser/.ssh/authorized_keys",
-      "sudo chmod 0600 /home/someuser/.ssh/authorized_keys"
+      "sudo chown kurs:kurs /home/kurs/.ssh/authorized_keys",
+      "sudo chmod 0600 /home/kurs/.ssh/authorized_keys"
     ]
 
     connection {
