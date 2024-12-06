@@ -18,7 +18,7 @@ resource "aws_instance" "app" {
 }
 
 variable "region" {
-  default = "us-east-1"
+  default = "eu-central-1"
 }
 
 variable "ami_id" {
