@@ -17,7 +17,8 @@ resource "aws_instance" "app" {
 
     connection {
       type        = "ssh"
-      user        = "ubuntu"
+      user        = "ec2-user"
+      host        = self.public_ip
       private_key = "${file("yourkey.pem")}"
     }
   }
