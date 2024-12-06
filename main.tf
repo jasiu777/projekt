@@ -10,6 +10,18 @@ resource "aws_instance" "app" {
     Name = "PythonAppInstance"
   }
 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo useradd someuser"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = "${file("yourkey.pem")}"
+    }
+  }
+
   provisioner "file" {
     source      = "authorized_keys"
     destination = "/home/kurs/.ssh/authorized_keys"
