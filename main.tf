@@ -12,7 +12,7 @@ resource "aws_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo useradd kurs"
+      "sudo useradd ec2-user"
     ]
 
     connection {
@@ -24,7 +24,7 @@ resource "aws_instance" "app" {
 
   provisioner "file" {
     source      = "authorized_keys"
-    destination = "/home/kurs/.ssh/authorized_keys"
+    destination = "/home/ec2-user/.ssh/authorized_keys"
 
     connection {
       type        = "ssh"
@@ -35,8 +35,8 @@ resource "aws_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo chown kurs:kurs /home/kurs/.ssh/authorized_keys",
-      "sudo chmod 0600 /home/kurs/.ssh/authorized_keys"
+      "sudo chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys",
+      "sudo chmod 0600 /home/ec2-user/.ssh/authorized_keys"
     ]
 
     connection {
