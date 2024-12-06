@@ -12,7 +12,7 @@ resource "aws_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo useradd someuser"
+      "sudo useradd kurs"
     ]
 
     connection {
